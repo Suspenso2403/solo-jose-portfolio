@@ -2,7 +2,9 @@
 import { siteConfig, navItems, contactEmail } from '@/data/site';
 import NavLink from '@/components/ui/NavLink.astro';
 import WorkSecondaryNav from '@/components/WorkSecondaryNav.astro';
-import { stripBase } from '@/utils/path';
+import { stripBase, withBase } from '@/utils/path';
+
+const homeHref = withBase('/');
 
 interface Props {
   currentPath?: string;
@@ -35,7 +37,8 @@ const workActive = isWorkSectionActive();
   <div class="flex justify-between items-center px-margin py-unit h-16">
     <div class="flex items-center gap-gutter min-w-0">
       <a
-        href={siteConfig.url}
+        href={homeHref}
+        data-nav-home={siteConfig.homeUrl}
         class="font-headline-md text-headline-md text-primary-container tracking-tighter uppercase font-bold no-underline shrink-0"
       >
         {siteConfig.name}
@@ -151,4 +154,24 @@ const workActive = isWorkSectionActive();
 
   initWorkNav();
   document.addEventListener('astro:page-load', initWorkNav);
+
+  function initBrandHomeLink() {
+    const link = document.querySelector<HTMLAnchorElement>('[data-nav-home]');
+    if (!link || (link as HTMLAnchorElement & { __homeBound?: boolean }).__homeBound) return;
+
+    (link as HTMLAnchorElement & { __homeBound?: boolean }).__homeBound = true;
+
+    link.addEventListener('click', (event) => {
+      const githubHome = link.dataset.navHome ?? 'https://suspenso2403.github.io/solo-jose-portfolio/';
+      const hostname = window.location.hostname.toLowerCase();
+
+      if (hostname === 'solojose.com' || hostname === 'www.solojose.com' || link.href.includes('solojose.com')) {
+        event.preventDefault();
+        window.location.assign(githubHome);
+      }
+    });
+  }
+
+  initBrandHomeLink();
+  document.addEventListener('astro:page-load', initBrandHomeLink);
 </script>

@@ -1,16 +1,19 @@
 ---
 import { siteConfig } from '@/data/site';
+import { withBase } from '@/utils/path';
 
 interface Props {
   note?: string;
 }
 
 const { note } = Astro.props;
+const homeHref = withBase('/');
 ---
 
 <div class="px-margin py-4 border-t border-grid-line bg-background flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
   <a
-    href={siteConfig.url}
+    href={homeHref}
+    data-nav-home={siteConfig.homeUrl}
     class="font-label-mono text-label-mono text-primary-container hover:underline no-underline"
   >
     ← BACK_TO_HOME

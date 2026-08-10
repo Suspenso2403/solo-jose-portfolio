@@ -6,7 +6,8 @@ export const siteConfig = {
   title: `${phase0.brand} — Product Designer`,
   description:
     'Product designer with a background in editorial design. UX for mobile apps, desktop web, and SaaS.',
-  url: 'https://Suspenso2403.github.io/solo-jose-portfolio/',
+  url: 'https://suspenso2403.github.io/solo-jose-portfolio/',
+  homeUrl: 'https://suspenso2403.github.io/solo-jose-portfolio/',
   lang: phase0.language,
   locale: phase0.locale,
   coordinates: '40.4168N_3.7038W',
