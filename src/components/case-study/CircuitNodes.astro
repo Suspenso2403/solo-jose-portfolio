@@ -42,6 +42,11 @@ const { circuits } = Astro.props;
           <h3 class="font-label-mono text-primary-container mb-2 uppercase text-xs tracking-wider">
             {circuit.title}
           </h3>
+          {circuit.tag && (
+            <p class="font-label-mono text-label-mono text-on-surface-variant mb-3 uppercase text-[10px] tracking-widest">
+              {circuit.tag}
+            </p>
+          )}
           <p
             class:list={[
               'font-body-md text-body-md leading-relaxed',

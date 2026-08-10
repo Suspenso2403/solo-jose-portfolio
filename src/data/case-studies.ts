@@ -33,30 +33,34 @@ export const caseStudies: CaseStudy[] = [
       {
         id: 'NODE_01',
         icon: 'admin_panel_settings',
-        title: 'Risk Management System',
+        title: 'Enterprise Risk & Regulatory Intelligence',
+        tag: 'Risk Management',
         description:
-          'Developing complex decision-tree interfaces for enterprise-level risk assessment, ensuring high-speed data entry and validation workflows.',
+          'Designing multi-tenant SaaS platforms to track, categorize, and evaluate regulatory changes across varying severity levels. I transformed complex compliance data into intuitive risk-assessment workflows, helping enterprise teams make fast, informed decisions.',
       },
       {
         id: 'NODE_02',
-        icon: 'rule',
-        title: 'Regulatory Compliance',
+        icon: 'health_and_safety',
+        title: 'Medicaid Compliance & Document Analysis',
+        tag: 'Healthcare Compliance',
         description:
-          'Architecture mapping for US Healthcare data sovereignty, aligning multi-tenant systems with strict federal auditing requirements.',
+          'Streamlining regulatory change detection within official Medicaid documentation. I designed an inline-highlighting and impact-analysis interface that allowed compliance officers to identify policy shifts directly inside regulatory texts and immediately assess their operational priority.',
       },
       {
         id: 'NODE_03',
         icon: 'account_tree',
-        title: 'EY Fabric IA',
+        title: 'EY Fabric Cost Reporting & Data Density',
+        tag: 'Information Architecture',
         description:
-          'Establishing global information architecture patterns for the EY Fabric ecosystem, promoting cross-departmental data discovery.',
+          'Redesigning the monthly cost reporting experience within EY Fabric. I structured complex financial data by creating dynamic column customization, a dual-view system (high-level summary vs. a 40+ column complete view), and an intuitive export workflow for customizable file downloads.',
       },
       {
         id: 'NODE_04',
-        icon: 'speed',
-        title: 'Transactional Optimization',
+        icon: 'edit_note',
+        title: 'System Communications & UX Copywriting',
+        tag: 'Transactional Design & Copy',
         description:
-          'Designing a high-density, real-time transaction monitoring interface that reduced operator cognitive load through structured data visualization and hardware-inspired telemetry.',
+          'Crafting clear, empathetic transactional microcopy and email messaging for EY Fabric users. I designed end-to-end communication touchpoints to notify global teams about system updates, billing adjustments, and account changes without causing friction.',
       },
     ],
     telemetry: {

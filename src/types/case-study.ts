@@ -9,6 +9,7 @@ export interface CaseStudyCircuit {
   id: string;
   icon: string;
   title: string;
+  tag?: string;
   description: string;
   highlighted?: boolean;
 }
