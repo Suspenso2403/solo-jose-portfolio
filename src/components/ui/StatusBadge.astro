@@ -1,0 +1,19 @@
+---
+interface Props {
+  text: string;
+  variant?: 'default' | 'outline';
+  class?: string;
+}
+
+const { text, variant = 'default', class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={[
+    'status-badge',
+    variant === 'outline' && 'status-badge-outline',
+    className,
+  ]}
+>
+  {variant === 'outline' ? `[${text}]` : text}
+</span>

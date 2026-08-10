@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import ArchiveCategorySection from '@/components/archive/ArchiveCategorySection.astro';
+import { archiveCategories } from '@/data/archive';
+---
+
+<BaseLayout
+  title="Visual Archive"
+  description="Editorial layouts, typography and visual explorations"
+  fullWidth
+  mainClass="py-0"
+>
+  <section class="border-b border-grid-border bg-background">
+    <div class="px-margin py-16 max-w-full">
+      <StatusBadge text="SYSTEM_STATUS: ONLINE" variant="outline" class="mb-4" />
+      <h1 class="font-display-lg text-display-lg text-on-surface tracking-tighter uppercase mb-2">
+        Visual Archive &amp;<br />Graphic Design
+      </h1>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+        A curated database of editorial layouts, typography, and visual explorations. Engineered
+        for technical precision and analytical depth.
+      </p>
+    </div>
+  </section>
+
+  {archiveCategories.map((category) => <ArchiveCategorySection category={category} />)}
+</BaseLayout>

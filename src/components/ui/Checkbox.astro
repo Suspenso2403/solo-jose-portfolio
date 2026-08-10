@@ -1,0 +1,16 @@
+---
+interface Props {
+  name: string;
+  label: string;
+  checked?: boolean;
+}
+
+const { name, label, checked = false } = Astro.props;
+const id = `checkbox-${name}`;
+---
+
+<label class="ds-checkbox" for={id}>
+  <input type="checkbox" id={id} name={name} checked={checked} />
+  <span class="ds-checkbox-box" aria-hidden="true"></span>
+  <span class="ds-checkbox-label">{label}</span>
+</label>

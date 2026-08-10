@@ -1,0 +1,28 @@
+---
+interface Props {
+  label?: string;
+  class?: string;
+  bodyClass?: string;
+  padded?: boolean;
+}
+
+const {
+  label,
+  class: className = '',
+  bodyClass = '',
+  padded = true,
+} = Astro.props;
+---
+
+<section class:list={['panel', padded && 'p-8', className]}>
+  {
+    label && (
+      <div class="panel-header">
+        <span class="font-label-mono text-label-mono text-on-surface">{label}</span>
+      </div>
+    )
+  }
+  <div class:list={[label && 'mt-8', bodyClass]}>
+    <slot />
+  </div>
+</section>

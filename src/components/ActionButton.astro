@@ -1,0 +1,28 @@
+---
+import { withBase } from '@/utils/path';
+
+interface Props {
+  href?: string;
+  type?: 'button' | 'link';
+  variant?: 'default' | 'solid';
+  download?: string;
+  class?: string;
+}
+
+const { href, type = 'button', variant = 'default', download, class: className = '' } = Astro.props;
+const resolvedHref = href ? withBase(href) : undefined;
+const baseClass = variant === 'solid' ? 'btn-action-node-solid' : 'btn-action-node';
+const classes = `${baseClass} font-label-mono text-label-mono uppercase ${className}`;
+---
+
+{
+  type === 'link' && resolvedHref ? (
+    <a href={resolvedHref} class={classes} download={download}>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class={classes}>
+      <slot />
+    </button>
+  )
+}

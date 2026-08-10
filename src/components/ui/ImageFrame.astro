@@ -1,0 +1,23 @@
+---
+import { withBase } from '@/utils/path';
+
+interface Props {
+  src: string;
+  alt: string;
+  aspect?: 'video' | 'square' | 'auto';
+  class?: string;
+}
+
+const { src, alt, aspect = 'auto', class: className = '' } = Astro.props;
+const resolvedSrc = withBase(src);
+
+const aspectClass = {
+  video: 'aspect-video',
+  square: 'aspect-square',
+  auto: 'h-48',
+}[aspect];
+---
+
+<div class:list={['image-frame group', aspectClass, className]}>
+  <img src={resolvedSrc} alt={alt} loading="lazy" />
+</div>

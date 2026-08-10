@@ -1,0 +1,154 @@
+---
+import { siteConfig, navItems, contactEmail } from '@/data/site';
+import NavLink from '@/components/ui/NavLink.astro';
+import WorkSecondaryNav from '@/components/WorkSecondaryNav.astro';
+import { stripBase, withBase } from '@/utils/path';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+const path = stripBase(currentPath);
+
+function isActive(href: string): boolean {
+  if (href === '/') return path === '/';
+  return path.startsWith(href);
+}
+
+function isWorkSectionActive(): boolean {
+  return (
+    path.startsWith('/work/') ||
+    path === '/archive' ||
+    path.startsWith('/archive/')
+  );
+}
+
+const workActive = isWorkSectionActive();
+---
+
+<header
+  id="site-header"
+  class="site-header w-full border-b border-outline-variant bg-background sticky top-0 z-50"
+  data-work-open="false"
+>
+  <div class="flex justify-between items-center px-margin py-unit h-16">
+    <div class="flex items-center gap-gutter min-w-0">
+      <a
+        href={withBase('/')}
+        class="font-headline-md text-headline-md text-primary-container tracking-tighter uppercase font-bold no-underline shrink-0"
+      >
+        {siteConfig.name}
+      </a>
+
+      <nav
+        class="hidden md:flex gap-gutter items-center border-l border-outline-variant pl-gutter h-8"
+        aria-label="Main"
+      >
+        <button
+          type="button"
+          class:list={['nav-link work-nav-trigger', workActive ? 'nav-link-active' : 'nav-link-inactive']}
+          data-work-trigger
+          aria-expanded="false"
+          aria-controls="work-panel"
+        >
+            WORK
+            <span class="material-symbols-outlined work-nav-trigger__icon" aria-hidden="true">
+            expand_more
+          </span>
+        </button>
+
+        {
+          navItems.map((item) => (
+            <NavLink href={item.href} active={isActive(item.href)}>
+              {item.label}
+            </NavLink>
+          ))
+        }
+      </nav>
+    </div>
+
+    <a
+      href={`mailto:${contactEmail}`}
+      class="font-label-mono text-label-mono text-primary-container border border-primary-container px-4 py-2 btn-action-node uppercase no-underline hidden sm:inline-flex shrink-0"
+    >
+      CONTACT
+    </a>
+  </div>
+
+  <WorkSecondaryNav currentPath={path} />
+
+  <nav
+    class="md:hidden w-full border-t border-outline-variant bg-background flex gap-2 px-margin py-2 overflow-x-auto items-center"
+    aria-label="Mobile"
+  >
+    <button
+      type="button"
+      class:list={[
+        'nav-link whitespace-nowrap work-nav-trigger inline-flex items-center gap-1',
+        workActive ? 'nav-link-active' : 'nav-link-inactive',
+      ]}
+      data-work-trigger
+      aria-expanded="false"
+      aria-controls="work-panel"
+    >
+      WORK
+      <span class="material-symbols-outlined work-nav-trigger__icon text-base" aria-hidden="true">expand_more</span>
+    </button>
+
+    {
+      navItems.map((item) => (
+        <NavLink href={item.href} active={isActive(item.href)} class="whitespace-nowrap">
+          {item.label}
+        </NavLink>
+      ))
+    }
+
+    <a
+      href={`mailto:${contactEmail}`}
+      class="nav-link nav-link-inactive whitespace-nowrap ml-auto"
+    >
+      CONTACT
+    </a>
+  </nav>
+</header>
+
+<script>
+  function setWorkOpen(open: boolean) {
+    const header = document.getElementById('site-header');
+    const triggers = document.querySelectorAll<HTMLButtonElement>('[data-work-trigger]');
+
+    if (!header) return;
+
+    header.dataset.workOpen = open ? 'true' : 'false';
+
+    triggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  function initWorkNav() {
+    setWorkOpen(false);
+  }
+
+  if (!(window as Window & { __workNavBound?: boolean }).__workNavBound) {
+    (window as Window & { __workNavBound?: boolean }).__workNavBound = true;
+
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as Element).closest('[data-work-trigger]');
+      if (!trigger) return;
+
+      const header = document.getElementById('site-header');
+      if (!header) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const isOpen = header.dataset.workOpen === 'true';
+      setWorkOpen(!isOpen);
+    });
+  }
+
+  initWorkNav();
+  document.addEventListener('astro:page-load', initWorkNav);
+</script>

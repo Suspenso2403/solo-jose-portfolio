@@ -1,0 +1,23 @@
+---
+import { withBase } from '@/utils/path';
+
+interface Props {
+  note?: string;
+}
+
+const { note } = Astro.props;
+---
+
+<div class="px-margin py-4 border-t border-grid-line bg-background flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <a
+    href={withBase('/')}
+    class="font-label-mono text-label-mono text-primary-container hover:underline no-underline"
+  >
+    ← BACK_TO_HOME
+  </a>
+  {note && (
+    <span class="font-label-mono text-[10px] text-on-surface-variant uppercase tracking-wider">
+      {note}
+    </span>
+  )}
+</div>

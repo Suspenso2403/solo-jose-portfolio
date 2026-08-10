@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProfileHero from '@/components/about/ProfileHero.astro';
+import SkillsMatrix from '@/components/about/SkillsMatrix.astro';
+import CareerTimeline from '@/components/about/CareerTimeline.astro';
+import ContactSection from '@/components/about/ContactSection.astro';
+import { profile } from '@/data/about';
+---
+
+<BaseLayout
+  title="About"
+  description={`${profile.name} — Senior Product Designer`}
+  fullWidth
+  mainClass="py-0 about-page"
+>
+  <ProfileHero />
+  <SkillsMatrix />
+  <CareerTimeline />
+  <ContactSection />
+</BaseLayout>
+
+<style is:global>
+  .about-page {
+    background-image: radial-gradient(
+      circle at 98% 28%,
+      rgba(255, 107, 0, 0.05) 0%,
+      transparent 50%
+    );
+  }
+</style>

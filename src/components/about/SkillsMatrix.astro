@@ -1,0 +1,52 @@
+---
+import { skillPanels } from '@/data/about';
+import type { SkillPanel } from '@/types';
+
+function panelBg(panel: SkillPanel): string {
+  return panel.id === 'B' ? 'bg-[#121212]' : '';
+}
+---
+
+<section class="grid grid-cols-1 md:grid-cols-3 border-b border-outline-variant">
+  {
+    skillPanels.map((panel, index) => (
+      <div
+        class:list={[
+          'p-margin',
+          panelBg(panel),
+          index < skillPanels.length - 1 && 'border-r border-outline-variant',
+        ]}
+      >
+        <div class="skill-panel-header">
+          <span class="font-label-mono text-label-mono text-on-surface">{panel.title}</span>
+          <span class="material-symbols-outlined text-[14px]">{panel.icon}</span>
+        </div>
+        <ul class="space-y-4 font-label-mono text-body-md text-on-surface-variant">
+          {
+            panel.items.map((item, itemIndex) => (
+              <li
+                class:list={[
+                  panel.activeDots
+                    ? 'flex justify-between items-center'
+                    : 'hover:text-primary-container transition-colors duration-0 cursor-help',
+                ]}
+              >
+                <span>&gt;&nbsp; {item}</span>
+                {
+                  panel.activeDots && (
+                    <div
+                      class:list={[
+                        'w-2 h-2',
+                        panel.activeDots[itemIndex] ? 'bg-primary-container' : 'bg-outline-variant',
+                      ]}
+                    />
+                  )
+                }
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    ))
+  }
+</section>

@@ -1,0 +1,77 @@
+---
+import { withBase } from '@/utils/path';
+
+interface Props {
+  label?: string;
+  empty?: boolean;
+  emptyText?: string;
+  aspect?: 'square' | 'poster' | 'video';
+  href?: string;
+  image?: string;
+  imageAlt?: string;
+  imageFit?: 'cover' | 'contain';
+  class?: string;
+}
+
+const {
+  label,
+  empty = false,
+  emptyText = 'NODE_OFFLINE',
+  aspect = 'square',
+  href,
+  image,
+  imageAlt = '',
+  imageFit = 'cover',
+  class: className = '',
+} = Astro.props;
+
+const aspectClass =
+  aspect === 'poster' ? 'aspect-[3/4]' : aspect === 'video' ? 'aspect-video' : 'aspect-square';
+const cellClass = ['grid-cell group', aspectClass, className, href && 'no-underline'];
+const imageClass =
+  imageFit === 'contain'
+    ? 'w-full h-full object-contain p-4 bg-white filter grayscale group-hover:grayscale-0 transition-all duration-300'
+    : 'w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-300';
+const resolvedHref = href ? withBase(href) : undefined;
+const resolvedImage = image ? withBase(image) : undefined;
+---
+
+{
+  empty ? (
+    <div class:list={['grid-cell-empty', aspectClass, className]}>
+      <span class="font-label-mono text-[10px] text-on-surface-variant opacity-30">
+        {emptyText}
+      </span>
+    </div>
+  ) : resolvedHref ? (
+    <a href={resolvedHref} class:list={cellClass}>
+      {
+        resolvedImage && (
+          <img
+            src={resolvedImage}
+            alt={imageAlt}
+            class={imageClass}
+            loading="lazy"
+          />
+        )
+      }
+      {label && <div class="grid-cell-label">{label}</div>}
+      <slot />
+    </a>
+  ) : (
+    <div class:list={cellClass}>
+      {
+        resolvedImage && (
+          <img
+            src={resolvedImage}
+            alt={imageAlt}
+            class={imageClass}
+            loading="lazy"
+          />
+        )
+      }
+      {label && <div class="grid-cell-label">{label}</div>}
+      <slot />
+    </div>
+  )
+}

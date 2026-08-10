@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CaseStudyHero from '@/components/case-study/CaseStudyHero.astro';
+import OperationalProtocol from '@/components/case-study/OperationalProtocol.astro';
+import CircuitNodes from '@/components/case-study/CircuitNodes.astro';
+import TelemetrySection from '@/components/case-study/TelemetrySection.astro';
+import FeatureTags from '@/components/case-study/FeatureTags.astro';
+import CaseStudyNav from '@/components/case-study/CaseStudyNav.astro';
+import MultiplicaContent from '@/components/case-study/MultiplicaContent.astro';
+import type { CaseStudy } from '@/types/case-study';
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+---
+
+<BaseLayout title={study.title} description={study.description || study.title} fullWidth mainClass="py-0">
+  {
+    study.layout === 'corporate' ? (
+      <div class="w-full max-w-[1440px] mx-auto px-margin flex flex-col gap-12 py-12">
+        <MultiplicaContent study={study} />
+      </div>
+    ) : (
+      <>
+        <CaseStudyHero study={study} />
+        <OperationalProtocol
+          protocol={study.protocol}
+          prefix={study.layout === 'enterprise' ? '[_> ' : undefined}
+        />
+        <CircuitNodes circuits={study.circuits} />
+        {study.telemetry && <TelemetrySection telemetry={study.telemetry} />}
+        {study.featureTags && <FeatureTags tags={study.featureTags} />}
+      </>
+    )
+  }
+  <CaseStudyNav note={study.footerNote} />
+</BaseLayout>

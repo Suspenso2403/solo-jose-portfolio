@@ -1,0 +1,113 @@
+---
+import type { CaseStudy } from '@/types/case-study';
+import { withBase } from '@/utils/path';
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+const headlineLines = study.headline.split('\n');
+const heroFillsContainer = study.heroImageFit === 'cover';
+---
+
+<section class="border-b border-tech flex flex-col md:flex-row min-h-[70vh]">
+  <div class="flex-1 p-margin md:p-12 flex flex-col justify-center border-r border-tech bg-background">
+    <div class="mb-4 flex flex-wrap gap-2">
+      <span class="font-label-mono text-label-mono border border-grid-line px-3 py-1 text-primary-container uppercase">
+        [Role: {study.role}]
+      </span>
+      {
+        study.period && (
+          <span class="font-label-mono text-label-mono border border-grid-line px-3 py-1 text-primary-container uppercase">
+            [{study.period}]
+          </span>
+        )
+      }
+    </div>
+
+    <h1 class="font-display-lg text-display-lg mb-6 uppercase tracking-tight text-on-surface font-bold leading-tight">
+      {headlineLines.map((line) => <>{line}<br /></>)}
+    </h1>
+
+    {
+      study.description && (
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-6">{study.description}</p>
+      )
+    }
+
+    {
+      study.confidentiality && (
+        <div class="p-4 flex items-start gap-4 max-w-2xl mt-6 bg-surface border-tech">
+          <span class="material-symbols-outlined text-primary-container shrink-0">lock</span>
+          <div class="space-y-1">
+            <p class="font-label-mono text-label-mono text-primary-container font-bold uppercase">
+              {study.confidentiality.title}
+            </p>
+            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              {study.confidentiality.text}
+            </p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      study.stats.length > 0 && (
+        <div class="mt-12 grid grid-cols-2 gap-4 font-label-mono text-label-mono">
+          {
+            study.stats.map((stat) => (
+              <div class="border-tech p-4 bg-surface">
+                <div class="text-on-surface-variant mb-1 uppercase">{stat.label}</div>
+                <div
+                  class:list={[
+                    'uppercase flex items-center gap-2',
+                    stat.highlight ? 'text-primary-container' : 'text-on-surface',
+                  ]}
+                >
+                  {stat.highlight && (
+                    <span
+                      class:list={['w-2 h-2 bg-primary-container', stat.pulse && 'animate-pulse']}
+                    />
+                  )}
+                  {stat.value}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      )
+    }
+  </div>
+
+  <div
+    class:list={[
+      'flex-1 bg-surface relative overflow-hidden',
+      heroFillsContainer ? 'p-0 min-h-[50vh] md:min-h-0' : 'flex items-center justify-center p-12',
+    ]}
+  >
+    <div
+      class:list={['case-hero-image-wrap', heroFillsContainer && 'case-hero-image-wrap--fill']}
+    >
+      <div class="case-corner-tl" aria-hidden="true"></div>
+      <div class="case-corner-tr" aria-hidden="true"></div>
+      <div class="case-corner-bl" aria-hidden="true"></div>
+      <div class="case-corner-br" aria-hidden="true"></div>
+      <img
+        src={withBase(study.heroImage)}
+        alt={study.heroImageAlt}
+        class:list={[
+          'case-hero-image z-10',
+          heroFillsContainer ? 'case-hero-image--cover' : 'case-hero-image--contain',
+        ]}
+        loading="eager"
+        decoding="async"
+      />
+      <div
+        class="absolute inset-0 opacity-5 pointer-events-none"
+        style="background-image: radial-gradient(circle, #333 1px, transparent 1px); background-size: 20px 20px;"
+        aria-hidden="true"
+      ></div>
+    </div>
+  </div>
+</section>

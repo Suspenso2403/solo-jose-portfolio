@@ -1,0 +1,18 @@
+---
+interface Props {
+  text: string;
+  color?: 'primary' | 'secondary' | 'tertiary';
+}
+
+const { text, color = 'primary' } = Astro.props;
+
+const colorClasses = {
+  primary: 'text-primary',
+  secondary: 'text-secondary border-secondary',
+  tertiary: 'text-tertiary border-tertiary',
+};
+---
+
+<span class={`data-tag font-label-mono text-label-mono px-2 py-1 ${colorClasses[color]}`}>
+  [{text}]
+</span>

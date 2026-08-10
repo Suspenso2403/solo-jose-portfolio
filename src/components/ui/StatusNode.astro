@@ -1,0 +1,22 @@
+---
+interface Props {
+  icon: string;
+  label: string;
+  color?: 'primary' | 'secondary' | 'tertiary' | 'muted' | 'primary-container';
+}
+
+const { icon, label, color = 'muted' } = Astro.props;
+
+const colorMap = {
+  primary: 'text-primary',
+  secondary: 'text-secondary',
+  tertiary: 'text-tertiary',
+  muted: 'text-on-surface-variant',
+  'primary-container': 'text-primary-container',
+};
+---
+
+<div class="flex items-center gap-4 mb-4 last:mb-0">
+  <span class={`material-symbols-outlined ${colorMap[color]}`}>{icon}</span>
+  <span class={`font-label-mono text-label-mono ${colorMap[color]}`}>{label}</span>
+</div>

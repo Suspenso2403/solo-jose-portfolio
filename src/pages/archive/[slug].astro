@@ -1,0 +1,120 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DataTag from '@/components/DataTag.astro';
+import { withBase } from '@/utils/path';
+import {
+  archiveItems,
+  getArchiveItem,
+  getAdjacentItems,
+} from '@/data/archive';
+
+export function getStaticPaths() {
+  return archiveItems.map((item) => ({ params: { slug: item.slug } }));
+}
+
+const { slug } = Astro.params;
+const item = getArchiveItem(slug!);
+
+if (!item) {
+  return Astro.redirect('/archive');
+}
+
+const { prev, next } = getAdjacentItems(slug!);
+---
+
+<BaseLayout
+  title={item.title}
+  description={item.description ?? item.title}
+  fullWidth
+  mainClass="py-0 min-h-[calc(100vh-64px)]"
+>
+  <div class="flex flex-col md:flex-row min-h-[calc(100vh-64px)] border-b border-grid-border">
+    <!-- Image -->
+    <div class="flex-grow bg-surface-container-low flex items-center justify-center p-8 border-b md:border-b-0 md:border-r border-grid-border min-h-[50vh] md:min-h-0">
+      <img
+        src={withBase(item.image)}
+        alt={item.imageAlt}
+        class="max-h-[85vh] w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+      />
+    </div>
+
+    <!-- Metadata panel -->
+    <aside class="w-full md:w-80 flex flex-col bg-surface shrink-0">
+      <div class="p-6 border-b border-grid-border flex justify-between items-start gap-4">
+        <div>
+          <h1 class="font-label-mono text-accent-orange mb-4">[Asset_Metadata]</h1>
+          <div class="space-y-4">
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-label-mono text-on-surface-variant uppercase">
+                Project_ID
+              </span>
+              <span class="font-label-mono text-on-surface">{item.id}</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-label-mono text-on-surface-variant uppercase">
+                Directory
+              </span>
+              <span class="font-label-mono text-on-surface">/{item.category}</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-label-mono text-on-surface-variant uppercase">Title</span>
+              <span class="font-headline-md text-headline-md text-on-surface">{item.title}</span>
+            </div>
+          </div>
+        </div>
+        <a
+          href={withBase('/archive')}
+          class="font-label-mono text-label-mono text-accent-orange border border-grid-border px-3 py-2 hover:bg-accent-orange hover:text-background transition-colors duration-0 no-underline shrink-0"
+          aria-label="Close and return to archive"
+        >
+          X
+        </a>
+      </div>
+
+      {
+        item.description && (
+          <div class="p-6 flex-grow border-b border-grid-border">
+            <h2 class="text-[10px] font-label-mono text-on-surface-variant uppercase mb-2">
+              Technical_Description
+            </h2>
+            <p class="font-label-mono text-[12px] text-on-surface leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        )
+      }
+
+      <div class="p-6 flex flex-wrap gap-2">
+        <DataTag text={item.category.replace('-', ' ')} color="primary" />
+        <DataTag text={item.label} color="secondary" />
+      </div>
+
+      <div class="p-6 border-t border-grid-border mt-auto flex justify-between gap-4">
+        {
+          prev ? (
+            <a
+              href={withBase(`/archive/${prev.slug}`)}
+              class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary-container transition-colors duration-0 no-underline"
+            >
+              ← {prev.label}
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+        {
+          next ? (
+            <a
+              href={withBase(`/archive/${next.slug}`)}
+              class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary-container transition-colors duration-0 no-underline"
+            >
+              {next.label} →
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

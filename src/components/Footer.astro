@@ -1,0 +1,26 @@
+---
+import { siteConfig, socialLinks } from '@/data/site';
+---
+
+<footer
+  class="bg-background w-full border-t border-grid-line flex flex-col md:flex-row justify-between items-center px-margin py-margin gap-gutter mt-24"
+>
+  <div class="font-label-mono text-label-mono text-on-surface">
+    COORD_REF: {siteConfig.coordinates}
+  </div>
+
+  <div class="flex gap-8">
+    {
+      socialLinks.map((link) => (
+        <a
+          href={link.href}
+          class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary duration-0 no-underline"
+          target={link.href.startsWith('http') ? '_blank' : undefined}
+          rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</footer>

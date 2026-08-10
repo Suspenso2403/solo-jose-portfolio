@@ -1,0 +1,55 @@
+---
+interface Props {
+  name: string;
+  label?: string;
+  type?: 'text' | 'email' | 'textarea';
+  placeholder?: string;
+  variant?: 'underline' | 'boxed';
+  required?: boolean;
+  rows?: number;
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  placeholder,
+  variant = 'underline',
+  required = false,
+  rows = 4,
+} = Astro.props;
+
+const inputClass = variant === 'boxed' ? 'input-field-boxed' : 'input-field';
+const id = `field-${name}`;
+---
+
+<div class="flex flex-col gap-2">
+  {
+    label && (
+      <label for={id} class="font-label-mono text-label-mono text-on-surface-variant uppercase">
+        {label}
+      </label>
+    )
+  }
+  {
+    type === 'textarea' ? (
+      <textarea
+        id={id}
+        name={name}
+        class={inputClass}
+        placeholder={placeholder}
+        required={required}
+        rows={rows}
+      />
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        class={inputClass}
+        placeholder={placeholder}
+        required={required}
+      />
+    )
+  }
+</div>

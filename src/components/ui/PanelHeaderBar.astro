@@ -1,0 +1,12 @@
+---
+interface Props {
+  label: string;
+  class?: string;
+}
+
+const { label, class: className = '' } = Astro.props;
+---
+
+<div class:list={['panel-header-bar', className]}>
+  <span class="font-label-mono text-label-mono text-on-surface">{label}</span>
+</div>

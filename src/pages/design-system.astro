@@ -1,0 +1,128 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ActionButton from '@/components/ActionButton.astro';
+import DataTag from '@/components/DataTag.astro';
+import Panel from '@/components/ui/Panel.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import StatusNode from '@/components/ui/StatusNode.astro';
+import InputField from '@/components/ui/InputField.astro';
+import Checkbox from '@/components/ui/Checkbox.astro';
+import DirectoryBar from '@/components/ui/DirectoryBar.astro';
+import GridCell from '@/components/ui/GridCell.astro';
+import ImageFrame from '@/components/ui/ImageFrame.astro';
+import TelemetryBar from '@/components/ui/TelemetryBar.astro';
+import { uiComponents } from '@/components/ui/registry';
+---
+
+<BaseLayout title="Design System" description="El Conmutador component reference">
+  <SectionHeader title="DESIGN SYSTEM" meta="EL CONMUTADOR // v0.2" />
+
+  <p class="font-body-md text-body-md text-on-surface-variant mb-12 max-w-2xl">
+    Component reference for the SOLO JOSÉ portfolio. All components follow sharp geometry (0px
+    radius), visible grid infrastructure, and instant (50ms) transitions.
+  </p>
+
+  <!-- Typography -->
+  <Panel label="MODULE :: TYPOGRAPHY" class="mb-12">
+    <div class="space-y-4">
+      <p class="font-display-lg text-display-lg">Display Large — Space Grotesk 700</p>
+      <p class="font-headline-lg text-headline-lg">Headline Large — Space Grotesk 600</p>
+      <p class="font-headline-md text-headline-md">Headline Medium — Space Grotesk 600</p>
+      <p class="font-body-lg text-body-lg">Body Large — Inter 400</p>
+      <p class="font-body-md text-body-md">Body Medium — Inter 400</p>
+      <p class="font-label-mono text-label-mono text-primary-container">Label Mono — JetBrains Mono 500</p>
+    </div>
+  </Panel>
+
+  <!-- Colors -->
+  <Panel label="MODULE :: COLOR_TOKENS" class="mb-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="border border-grid-line p-4 bg-primary-container"><span class="font-label-mono text-label-mono text-background">primary-container</span></div>
+      <div class="border border-grid-line p-4 bg-secondary"><span class="font-label-mono text-label-mono text-on-secondary">secondary</span></div>
+      <div class="border border-grid-line p-4 bg-tertiary"><span class="font-label-mono text-label-mono text-on-tertiary">tertiary</span></div>
+      <div class="border border-grid-line p-4 bg-surface"><span class="font-label-mono text-label-mono text-on-surface">surface</span></div>
+    </div>
+  </Panel>
+
+  <!-- Action nodes -->
+  <Panel label="MODULE :: ACTION_NODES" class="mb-12">
+    <div class="flex flex-wrap gap-4 items-center">
+      <ActionButton>DEFAULT_NODE</ActionButton>
+      <ActionButton variant="solid" class="px-4 py-2">SOLID_NODE</ActionButton>
+      <ActionButton type="link" href="/" class="px-4 py-2">LINK_NODE</ActionButton>
+    </div>
+  </Panel>
+
+  <!-- Data tags & badges -->
+  <Panel label="MODULE :: DATA_TAGS" class="mb-12">
+    <div class="flex flex-wrap gap-4 items-center">
+      <DataTag text="Business Strategy" color="primary" />
+      <DataTag text="User Research" color="tertiary" />
+      <DataTag text="Visual Systems" color="secondary" />
+      <StatusBadge text="SYSTEM_STATUS: ONLINE" variant="outline" />
+    </div>
+  </Panel>
+
+  <!-- Status nodes -->
+  <Panel label="MODULE :: STATUS_NODES" class="mb-12">
+    <StatusNode icon="computer" label="UI PROPERTIES: ACCESSIBILITY_VALIDATED" color="secondary" />
+    <StatusNode icon="science" label="PROCESS: RESEARCH_ACTIVE" color="tertiary" />
+    <StatusNode icon="visibility" label="USER_VALIDATION: INSIGHTS_ACTIVE" color="primary-container" />
+  </Panel>
+
+  <!-- Inputs -->
+  <Panel label="MODULE :: INPUT_FIELDS" class="mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl">
+      <InputField name="email" label="Email" type="email" placeholder="operator@system.local" />
+      <InputField name="message" label="Message" type="textarea" placeholder="Enter transmission..." variant="boxed" />
+    </div>
+    <div class="mt-6 flex flex-col gap-3">
+      <Checkbox name="newsletter" label="SUBSCRIBE_TO_UPDATES" />
+      <Checkbox name="terms" label="ACCEPT_PROTOCOL" checked />
+    </div>
+  </Panel>
+
+  <!-- Image frame -->
+  <Panel label="MODULE :: IMAGE_FRAME" class="mb-12">
+    <ImageFrame
+      src="/assets/ey-gds.png"
+      alt="Sample project thumbnail"
+      aspect="video"
+      class="max-w-xl"
+    />
+  </Panel>
+
+  <!-- Directory & grid cells -->
+  <section class="mb-12 border border-grid-line">
+    <DirectoryBar path="/editorial-design" meta="SLOTS: 03_AVAILABLE" />
+    <div class="grid grid-cols-3 md:grid-cols-6">
+      <GridCell label="ED_VOL_04" image="/assets/editorial-04.png" />
+      <GridCell empty emptyText="NO_DATA" />
+      <GridCell empty />
+      <GridCell empty emptyText="NODE_OFFLINE" />
+      <GridCell empty />
+      <GridCell empty emptyText="NO_DATA" />
+    </div>
+  </section>
+
+  <!-- Telemetry -->
+  <Panel label="MODULE :: TELEMETRY" class="mb-12">
+    <div class="max-w-md space-y-6">
+      <TelemetryBar label="BITRATE" value="44.1KHZ" percent={66} />
+      <TelemetryBar label="REF_MOD" value="ANALYTICAL" percent={100} />
+    </div>
+  </Panel>
+
+  <!-- Registry -->
+  <Panel label="MODULE :: REGISTRY">
+    <p class="font-label-mono text-label-mono text-on-surface-variant mb-4">
+      {uiComponents.length} UI components registered:
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {uiComponents.map((name) => (
+        <DataTag text={name} color="primary" />
+      ))}
+    </div>
+  </Panel>
+</BaseLayout>

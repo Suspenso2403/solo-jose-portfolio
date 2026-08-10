@@ -1,0 +1,19 @@
+---
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+<section class="border-t border-tech p-margin flex flex-col md:flex-row items-center gap-12 bg-background">
+  <div class="flex-1 flex flex-wrap gap-4 font-label-mono text-[11px] w-full">
+    {
+      tags.map((tag) => (
+        <div class="border border-grid-line px-4 py-2 hover:border-primary-container cursor-help transition-colors duration-0">
+          {tag}
+        </div>
+      ))
+    }
+  </div>
+</section>

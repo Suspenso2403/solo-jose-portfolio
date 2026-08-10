@@ -1,0 +1,28 @@
+---
+import type { CaseStudy } from '@/types/case-study';
+
+interface Props {
+  protocol: CaseStudy['protocol'];
+  prefix?: string;
+}
+
+const { protocol, prefix } = Astro.props;
+---
+
+<section class="border-b border-tech bg-background overflow-hidden">
+  <div class="font-label-mono text-label-mono bg-surface px-margin py-2 border-b border-tech flex justify-between items-center">
+    <span class="text-on-surface-variant uppercase tracking-widest">{protocol.header}</span>
+    {protocol.version && <span class="text-primary-container">{protocol.version}</span>}
+  </div>
+  <div class="p-margin grid grid-cols-1 md:grid-cols-4 gap-gutter font-label-mono text-label-mono text-sm">
+    {
+      protocol.columns.map((column) => (
+        <div class="flex flex-col gap-2">
+          {column.map((item) => (
+            <div class="protocol-item">{prefix ? `${prefix}${item}]` : item}</div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,217 @@
+---
+import type { CaseStudy } from '@/types/case-study';
+import { withBase } from '@/utils/path';
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+const headlineLines = study.headline.split('\n');
+---
+
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter border border-grid-line bg-background">
+  <div class="col-span-1 md:col-span-8 p-8 border-b md:border-b-0 md:border-r border-grid-line flex flex-col justify-center gap-6">
+    <div class="flex gap-2 items-center">
+      <span class="inline-block w-2 h-2 bg-primary-container"></span>
+      <span class="font-label-mono text-label-mono text-primary-container uppercase">Project File: 001</span>
+    </div>
+    <h1 class="font-display-lg text-display-lg text-on-background uppercase">
+      {headlineLines.map((line) => (
+        <>
+          {line}
+          <br />
+        </>
+      ))}
+    </h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">{study.description}</p>
+    {
+      study.heroInlineImage && (
+        <div class="mt-4">
+          <img
+            src={withBase(study.heroInlineImage)}
+            alt={study.heroImageAlt}
+            class="w-full h-64 object-cover border border-grid-line"
+          />
+        </div>
+      )
+    }
+  </div>
+
+  {
+    study.metadata && (
+      <div class="col-span-1 md:col-span-4 bg-surface p-8 flex flex-col gap-6">
+        <div class="border-b border-grid-line pb-2 flex items-center justify-between">
+          <span class="font-label-mono text-label-mono text-on-background">METADATA_NODE</span>
+          <span class="material-symbols-outlined text-primary-container">dns</span>
+        </div>
+        <ul class="flex flex-col gap-4 font-label-mono text-label-mono text-on-surface-variant">
+          {
+            study.metadata.map((item) => (
+              <li class="flex flex-col gap-1">
+                <span class="text-primary-container">[{item.label}]</span>
+                {
+                  Array.isArray(item.value) ? (
+                    item.value.map((line) => <span>{line}</span>)
+                  ) : (
+                    <span>{item.value}</span>
+                  )
+                }
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    )
+  }
+</section>
+
+<section class="flex flex-col gap-6">
+  <div class="section-divider">
+    <h2 class="font-headline-lg text-headline-lg text-on-background">Critical Nodes</h2>
+    <div class="section-divider-line"></div>
+    <span class="font-label-mono text-label-mono text-primary-container">002_CHALLENGES</span>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-grid-line">
+    {
+      study.challenges?.map((challenge, index) => (
+        <div
+          class:list={[
+            'p-6 bg-background hover:bg-surface transition-colors duration-0 border-grid-line',
+            index % 2 === 0 && 'md:border-r',
+            index < 2 && 'border-b md:border-b-0',
+            index >= 2 && 'border-t',
+          ]}
+        >
+          <div class="flex items-center gap-3 mb-4">
+            <span class="font-label-mono text-label-mono text-primary-container bg-primary-container/10 px-2 py-1 border border-primary-container">
+              {challenge.id}
+            </span>
+            <h3 class="font-headline-md text-headline-md text-on-background">{challenge.title}</h3>
+          </div>
+          <p class="font-body-md text-body-md text-on-surface-variant">{challenge.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section class="flex flex-col gap-6">
+  <div class="section-divider">
+    <h2 class="font-headline-lg text-headline-lg text-on-background">The Control Board</h2>
+    <div class="section-divider-line"></div>
+    <span class="font-label-mono text-label-mono text-primary-container">003_CONTRIBUTION</span>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-grid-line bg-background">
+    {
+      study.channels?.map((channel, index) => (
+        <div
+          class:list={[
+            'p-6 flex flex-col gap-4 relative',
+            index < 2 && 'md:border-r border-grid-line',
+            channel.critical ? 'border-2 border-primary-container bg-background' : 'border-b md:border-b-0',
+            index === 1 && 'bg-surface',
+          ]}
+        >
+          {
+            channel.critical && (
+              <div class="absolute top-0 right-0 p-1 bg-primary-container text-background font-label-mono text-[10px]">
+                CRITICAL_PATH
+              </div>
+            )
+          }
+          <div
+            class:list={[
+              'font-label-mono text-label-mono border-b pb-2',
+              channel.critical
+                ? 'text-primary-container border-primary-container'
+                : 'text-on-surface-variant border-grid-line',
+            ]}
+          >
+            {channel.title}
+          </div>
+          <ul class="font-body-md text-body-md text-on-background space-y-3 list-none">
+            {channel.items.map((item) => (
+              <li class="flex gap-2 items-start">
+                <span class="text-primary-container font-bold">&gt;</span> {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section class="flex flex-col gap-6">
+  <div class="section-divider">
+    <h2 class="font-headline-lg text-headline-lg text-on-background">Connection Lines</h2>
+    <div class="section-divider-line"></div>
+    <span class="font-label-mono text-label-mono text-primary-container">004_PROCESS</span>
+  </div>
+  <div class="relative border border-grid-line p-8 bg-background">
+    <div class="absolute left-8 md:left-1/2 top-8 bottom-8 w-px bg-primary-container hidden md:block"></div>
+    <div class="flex flex-col gap-12 relative z-10">
+      {
+        study.phases?.map((phase) => (
+          <div class="flex flex-col md:flex-row items-center md:justify-between w-full relative">
+            {
+              phase.align === 'left' ? (
+                <>
+                  <div class="w-full md:w-[45%] bg-surface border border-grid-line p-4 ml-8 md:ml-0 md:text-right">
+                    <h4 class="font-label-mono text-label-mono text-primary-container mb-2">{phase.subtitle}</h4>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-2">{phase.title}</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">{phase.description}</p>
+                  </div>
+                  <div class="w-3 h-3 bg-primary-container border-2 border-background absolute left-8 md:left-1/2 -translate-x-1/2 mt-6 md:mt-0"></div>
+                  <div class="w-full md:w-[45%] hidden md:block"></div>
+                </>
+              ) : (
+                <>
+                  <div class="w-full md:w-[45%] hidden md:block"></div>
+                  <div class="w-3 h-3 bg-primary-container border-2 border-background absolute left-8 md:left-1/2 -translate-x-1/2 mt-6 md:mt-0"></div>
+                  <div class="w-full md:w-[45%] bg-surface border border-grid-line p-4 ml-8 md:ml-0">
+                    <h4 class="font-label-mono text-label-mono text-primary-container mb-2">{phase.subtitle}</h4>
+                    <h3 class="font-headline-md text-headline-md text-on-background mb-2">{phase.title}</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">{phase.description}</p>
+                  </div>
+                </>
+              )
+            }
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="flex flex-col gap-6">
+  <div class="section-divider">
+    <h2 class="font-headline-lg text-headline-lg text-on-background">Output Log</h2>
+    <div class="section-divider-line"></div>
+    <span class="font-label-mono text-label-mono text-primary-container">005_RESULTS</span>
+  </div>
+  <div class="border border-grid-line bg-[#0A0A0A] p-8 font-label-mono text-label-mono text-on-surface-variant relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-1 bg-primary-container/20"></div>
+    <div class="flex items-center gap-2 mb-6 border-b border-grid-line pb-2">
+      <span class="material-symbols-outlined text-primary-container text-sm">terminal</span>
+      <span class="text-primary-container">root@system:~# ./read_conclusions.sh</span>
+    </div>
+    <div class="space-y-4">
+      {
+        study.outputLog?.map((line, index) => (
+          <p
+            class:list={[
+              index === 0 && 'text-on-background',
+              index === study.outputLog!.length - 1 && 'text-primary-container',
+              index > 0 && index < study.outputLog!.length - 1 && 'text-on-surface-variant leading-relaxed',
+            ]}
+          >
+            <span class="text-primary-container">&gt; </span>
+            {line}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ActionButton from '@/components/ActionButton.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import IntroClip from '@/components/home/IntroClip.astro';
+import Panel from '@/components/ui/Panel.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import StatusNode from '@/components/ui/StatusNode.astro';
+import { getHeroLayout, HERO_VIDEO_LAYOUT } from '@/data/home-layout';
+import { projects } from '@/data/projects';
+import { withBase } from '@/utils/path';
+
+const heroLayout = getHeroLayout(HERO_VIDEO_LAYOUT);
+
+const statusNodes = [
+  { icon: 'computer', label: 'UI PROPERTIES: ACCESSIBILITY_VALIDATED', color: 'secondary' as const },
+  { icon: 'science', label: 'PROCESS: RESEARCH_ACTIVE', color: 'tertiary' as const },
+  { icon: 'precision_manufacturing', label: 'STRATEGY_DECISIONS: TRACKING_ACTIVE', color: 'primary-container' as const },
+  { icon: 'groups', label: 'CROSS_FUNCTIONAL: LINK_ACTIVE', color: 'muted' as const },
+  { icon: 'visibility', label: 'USER_VALIDATION: INSIGHTS_ACTIVE', color: 'primary-container' as const },
+];
+
+const quickFacts = [
+  { term: 'Experience', detail: '6+ years in UX' },
+  { term: 'Platforms', detail: 'Mobile, web & SaaS' },
+  { term: 'Background', detail: 'Editorial design' },
+];
+---
+
+<BaseLayout mainClass="!py-12 md:!py-16 lg:!py-20">
+  <section
+    class="relative mb-16 md:mb-20 pb-12 md:pb-14 border-b border-grid-line"
+    aria-labelledby="home-intro"
+  >
+    <div class="grid-line-v left-0"></div>
+    <div class="grid-line-v right-0"></div>
+
+    <div class="px-6 md:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-8 items-start">
+        <div class:list={['min-w-0', heroLayout.text]}>
+          <StatusBadge text="STATUS: ONLINE // SYS_READY" class="mb-3" />
+
+          <h1
+            id="home-intro"
+            class="font-headline-lg text-headline-lg text-on-surface mb-3 tracking-tight"
+          >
+            Product designer with editorial roots.
+          </h1>
+
+          <p class="font-body-md text-body-md text-on-surface max-w-xl mb-2">
+            I'm José — I build clear, research-led interfaces for complex products.
+          </p>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mb-6">
+            From fintech apps to enterprise risk platforms — grounded in research, validation, and
+            cross-functional collaboration.
+          </p>
+
+          <dl
+            class="grid grid-cols-1 sm:grid-cols-3 gap-x-6 gap-y-4 mb-8 py-4 border-y border-grid-line"
+          >
+            {
+              quickFacts.map(({ term, detail }) => (
+                <div>
+                  <dt class="font-label-mono text-label-mono text-on-surface-variant mb-1">
+                    {term}
+                  </dt>
+                  <dd class="font-body-md text-body-md text-on-surface">{detail}</dd>
+                </div>
+              ))
+            }
+          </dl>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <ActionButton
+              href="#projects"
+              type="link"
+              variant="solid"
+              class="px-6 py-3 inline-flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">work</span>
+              View selected work
+            </ActionButton>
+            <ActionButton href="/about" type="link" class="px-6 py-3 inline-flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">person</span>
+              About me
+            </ActionButton>
+          </div>
+        </div>
+
+        <IntroClip class={heroLayout.video} />
+      </div>
+    </div>
+  </section>
+
+  <Panel label="SYS_DIAGNOSTIC :: APPROACH.LOG" class="mb-16 md:mb-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+      <div>
+        <h2 class="font-headline-md text-headline-md mb-3 text-on-surface">
+          How I approach complex problems
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-prose">
+          With 6+ years of experience in UX across mobile apps, desktop web, and SaaS. I've designed
+          risk management platforms that handle large volumes of data, refining an analytical,
+          research-led approach along the way. My process integrates discovery, interface design, and
+          validation — so decisions stay informed from brief to release.
+        </p>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-prose mt-4">
+          <a
+            href={withBase('/about')}
+            class="text-primary-container underline underline-offset-4 decoration-primary-container/40 hover:decoration-primary-container transition-colors duration-0"
+          >
+            Read full profile →
+          </a>
+        </p>
+      </div>
+      <div class="md:border-l md:border-grid-line md:pl-8 lg:pl-10 flex flex-col justify-center gap-1">
+        {statusNodes.map((node) => (
+          <StatusNode icon={node.icon} label={node.label} color={node.color} />
+        ))}
+      </div>
+    </div>
+  </Panel>
+
+  <section id="projects" aria-label="Selected work">
+    <SectionHeader title="ACTIVE NODES" meta="QTR_4 // DEPLOYMENTS" />
+    <p class="font-body-md text-body-md text-on-surface-variant -mt-6 mb-8 max-w-2xl">
+      Case studies and visual work — start with product design or browse the graphic archive.
+    </p>
+    <div
+      class="grid grid-cols-1 gap-0 border border-grid-line bg-grid-line p-grid_stroke md:grid-cols-2 lg:grid-cols-4"
+    >
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>

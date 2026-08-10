@@ -1,0 +1,57 @@
+---
+import type { CaseStudyCircuit } from '@/types/case-study';
+
+interface Props {
+  circuits: CaseStudyCircuit[];
+}
+
+const { circuits } = Astro.props;
+---
+
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 min-h-[400px]">
+  {
+    circuits.map((circuit, index) => (
+      <div
+        class:list={[
+          'circuit-card',
+          index > 0 && 'md:border-l border-tech',
+          index >= 2 && 'lg:border-l',
+          circuit.highlighted && 'border-t-2 border-t-primary-container bg-surface-container-high',
+        ]}
+      >
+        <div class="flex justify-between items-start mb-12">
+          <span
+            class:list={[
+              'font-label-mono text-label-mono uppercase',
+              circuit.highlighted ? 'text-primary-container' : 'text-on-surface-variant',
+            ]}
+          >
+            {circuit.id}
+          </span>
+          <span
+            class:list={[
+              'material-symbols-outlined',
+              circuit.highlighted ? 'text-primary-container' : 'text-on-surface-variant',
+            ]}
+            style={circuit.highlighted ? "font-variation-settings: 'FILL' 1;" : undefined}
+          >
+            {circuit.icon}
+          </span>
+        </div>
+        <div class="mt-auto">
+          <h3 class="font-label-mono text-primary-container mb-2 uppercase text-xs tracking-wider">
+            {circuit.title}
+          </h3>
+          <p
+            class:list={[
+              'font-body-md text-body-md leading-relaxed',
+              circuit.highlighted ? 'text-on-surface font-medium' : 'text-on-surface-variant',
+            ]}
+          >
+            {circuit.description}
+          </p>
+        </div>
+      </div>
+    ))
+  }
+</section>

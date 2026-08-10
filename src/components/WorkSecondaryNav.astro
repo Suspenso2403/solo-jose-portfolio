@@ -1,0 +1,43 @@
+---
+import { projects, getProjectHref } from '@/data/projects';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '' } = Astro.props;
+
+function isProjectActive(slug: string, path: string): boolean {
+  if (slug === 'archive') {
+    return path === '/archive' || path.startsWith('/archive/');
+  }
+  return path.startsWith(`/work/${slug}`);
+}
+---
+
+<nav
+  id="work-panel"
+  class="work-secondary-nav"
+  aria-label="Work projects"
+  data-work-panel
+>
+  {
+    projects.map((project) => {
+      const href = getProjectHref(project.slug);
+      const active = isProjectActive(project.slug, currentPath);
+
+      return (
+        <a
+          href={href}
+          class:list={[
+            'work-secondary-nav__link',
+            active && 'work-secondary-nav__link--active',
+          ]}
+        >
+          <span class="work-secondary-nav__id">{project.id}</span>
+          <span class="work-secondary-nav__title">{project.title}</span>
+        </a>
+      );
+    })
+  }
+</nav>

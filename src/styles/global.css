@@ -1,0 +1,376 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-on-surface font-body-lg text-body-lg overflow-x-hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #262626;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #a3a3a3;
+  }
+
+  ::selection {
+    @apply bg-primary-container text-background;
+  }
+
+  :focus-visible {
+    @apply outline outline-1 outline-primary-container outline-offset-2;
+  }
+}
+
+@layer components {
+  /* ── Grid infrastructure ── */
+  .grid-line-v {
+    @apply absolute top-0 bottom-0 w-px bg-grid-line z-0;
+  }
+
+  .grid-line-h {
+    @apply absolute left-0 right-0 h-px bg-grid-line z-0;
+  }
+
+  .content-layer {
+    @apply relative z-10;
+  }
+
+  /* ── Action nodes (buttons) ── */
+  .btn-action-node {
+    @apply border border-primary-container text-primary-container bg-transparent
+           transition-all duration-0 cursor-pointer
+           hover:bg-primary-container hover:text-background;
+  }
+
+  .btn-action-node-solid {
+    @apply border border-primary-container bg-primary-container text-background
+           transition-all duration-0 cursor-pointer
+           hover:bg-transparent hover:text-primary-container;
+  }
+
+  /* ── Data tags ── */
+  .data-tag {
+    @apply border border-grid-line bg-base-bg inline-block;
+  }
+
+  /* ── Panels ── */
+  .panel {
+    @apply bg-panel-bg border border-grid-line relative;
+  }
+
+  .panel-header {
+    @apply absolute top-0 left-0 w-full h-6 bg-surface-variant flex items-center px-4;
+  }
+
+  .panel-header-bar {
+    @apply w-full h-6 bg-surface-variant flex items-center px-2
+           opacity-50 transition-opacity duration-0;
+  }
+
+  .panel-body {
+    @apply p-8 pt-10;
+  }
+
+  /* ── Navigation ── */
+  .nav-link {
+    @apply font-label-mono text-label-mono px-2 py-1 transition-colors duration-0 no-underline;
+  }
+
+  .nav-link-active {
+    @apply text-primary-container border-b border-primary-container;
+  }
+
+  .nav-link-inactive {
+    @apply text-on-surface-variant hover:bg-primary-container hover:text-background;
+  }
+
+  .work-nav-trigger {
+    @apply inline-flex items-center gap-1 bg-transparent border-0 cursor-pointer;
+  }
+
+  .work-nav-trigger__icon {
+    @apply text-base transition-transform duration-0;
+  }
+
+  .site-header[data-work-open='true'] .work-nav-trigger__icon {
+    @apply rotate-180;
+  }
+
+  .work-secondary-nav {
+    @apply hidden border-t border-outline-variant bg-surface;
+  }
+
+  .site-header[data-work-open='true'] .work-secondary-nav {
+    @apply flex flex-col sm:flex-row sm:flex-wrap;
+  }
+
+  .work-secondary-nav__link {
+    @apply flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3
+           px-margin py-3 sm:py-2 border-b sm:border-b-0 sm:border-r border-outline-variant
+           font-label-mono text-label-mono uppercase no-underline
+           text-on-surface-variant hover:text-primary-container hover:bg-surface-container-low
+           transition-colors duration-0 min-w-0 flex-1;
+  }
+
+  .work-secondary-nav__link--active {
+    @apply text-primary-container bg-surface-container-low;
+  }
+
+  .work-secondary-nav__id {
+    @apply text-[10px] text-on-surface-variant/70;
+  }
+
+  .work-secondary-nav__title {
+    @apply text-xs sm:text-label-mono truncate;
+  }
+
+  /* ── Status badge ── */
+  .status-badge {
+    @apply font-label-mono text-label-mono text-primary-container inline-block;
+  }
+
+  .status-badge-outline {
+    @apply border border-accent-orange text-accent-orange px-2 py-1;
+  }
+
+  /* ── Section header ── */
+  .section-header {
+    @apply flex items-center justify-between border-b border-grid-line pb-4 mb-8;
+  }
+
+  /* ── Input fields ── */
+  .input-field {
+    @apply w-full bg-transparent font-body-md text-body-md text-on-surface
+           border-0 border-b border-grid-line pb-2
+           transition-colors duration-0
+           placeholder:text-on-surface-variant/50
+           focus:outline-none focus:border-primary-container;
+  }
+
+  .input-field-boxed {
+    @apply w-full bg-transparent font-body-md text-body-md text-on-surface
+           border border-grid-line p-3
+           transition-colors duration-0
+           placeholder:text-on-surface-variant/50
+           focus:outline-none focus:border-primary-container;
+  }
+
+  /* ── Checkbox (X mark, not check) ── */
+  .ds-checkbox {
+    @apply inline-flex items-center gap-3 cursor-pointer select-none;
+  }
+
+  .ds-checkbox input {
+    @apply sr-only;
+  }
+
+  .ds-checkbox-box {
+    @apply w-4 h-4 border border-grid-line bg-base-bg flex items-center justify-center
+           transition-all duration-0 shrink-0;
+  }
+
+  .ds-checkbox input:checked + .ds-checkbox-box {
+    @apply bg-primary-container border-primary-container;
+  }
+
+  .ds-checkbox input:checked + .ds-checkbox-box::after {
+    content: '×';
+    @apply text-background font-label-mono text-sm leading-none;
+  }
+
+  .ds-checkbox-label {
+    @apply font-label-mono text-label-mono text-on-surface-variant;
+  }
+
+  /* ── Image frame (archive / project thumbnails) ── */
+  .image-frame {
+    @apply w-full overflow-hidden border border-grid-line bg-base-bg;
+  }
+
+  .image-frame img {
+    @apply w-full h-full object-cover grayscale opacity-70 transition-all duration-0;
+  }
+
+  .image-frame.group:hover img {
+    @apply grayscale-0 opacity-100;
+  }
+
+  /* ── Overlay / backdrop ── */
+  .overlay-backdrop {
+    @apply fixed inset-0 z-40 bg-background/60 backdrop-blur-[10px];
+  }
+
+  .overlay-panel {
+    @apply fixed z-50 bg-surface border border-grid-line;
+  }
+
+  /* ── Directory bar (archive sections) ── */
+  .directory-bar {
+    @apply flex border-b border-grid-border bg-surface-container-low;
+  }
+
+  .directory-bar-path {
+    @apply px-margin py-3 border-r border-grid-border font-label-mono text-label-mono text-accent-orange;
+  }
+
+  .directory-bar-meta {
+    @apply px-margin py-3 border-l border-grid-border font-label-mono text-label-mono text-on-surface-variant ml-auto;
+  }
+
+  /* ── Grid cell (archive) ── */
+  .grid-cell {
+    @apply border-r border-b border-grid-border bg-surface relative;
+  }
+
+  .grid-cell-empty {
+    @apply grid-cell flex items-center justify-center bg-surface-container-low;
+  }
+
+  .grid-cell-label {
+    @apply absolute bottom-2 left-2 bg-background/80 px-1 border border-grid-border font-label-mono text-[10px];
+  }
+
+  /* ── Telemetry bar ── */
+  .telemetry-bar {
+    @apply w-full bg-grid-line h-px;
+  }
+
+  .telemetry-fill {
+    @apply bg-primary-container h-full transition-all duration-0;
+  }
+
+  /* ── Corner markers (case study images) ── */
+  .corner-markers {
+    @apply relative;
+  }
+
+  .corner-markers::before,
+  .corner-markers::after,
+  .corner-markers > .corner-bl,
+  .corner-markers > .corner-br {
+    @apply absolute w-2 h-2 border-primary-container z-20 pointer-events-none;
+  }
+
+  .corner-markers::before {
+    content: '';
+    @apply top-0 left-0 border-t border-l;
+  }
+
+  .corner-markers::after {
+    content: '';
+    @apply top-0 right-0 border-t border-r;
+  }
+
+  /* ── About page ── */
+  .scanline {
+    @apply w-full h-0.5 absolute;
+    background: rgba(255, 107, 0, 0.1);
+    animation: scan 4s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  .profile-portrait-frame {
+    @apply relative border border-outline-variant w-full aspect-square max-w-md p-2;
+  }
+
+  .profile-portrait-inner {
+    @apply relative w-full aspect-square overflow-hidden bg-[#111111] border border-outline-variant;
+  }
+
+  .profile-portrait-image {
+    @apply absolute inset-0 w-full h-full object-cover object-center grayscale;
+  }
+
+  .skill-panel-header {
+    @apply bg-surface-variant px-4 py-2 mb-gutter flex justify-between items-center border border-outline-variant;
+  }
+
+  .career-row {
+    @apply bg-background p-8 grid grid-cols-1 md:grid-cols-4 gap-gutter
+           hover:bg-[#151515] transition-colors duration-0;
+  }
+
+  .contact-input {
+    @apply w-full bg-background border border-outline-variant text-on-surface font-label-mono p-4
+           focus:outline-none focus:border-primary-container placeholder:text-outline-variant
+           transition-colors duration-0;
+  }
+
+  .transmit-button {
+    @apply w-full bg-primary-container text-background font-label-mono font-bold py-6
+           hover:bg-on-surface transition-colors duration-0 uppercase tracking-widest;
+  }
+
+  /* ── Case studies ── */
+  .border-tech {
+    @apply border border-grid-line;
+  }
+
+  .case-hero-image-wrap {
+    @apply relative w-full max-w-lg aspect-square border-tech bg-background overflow-hidden;
+  }
+
+  .case-hero-image-wrap--fill {
+    @apply absolute inset-0 w-full h-full max-w-none aspect-auto border-0;
+  }
+
+  .case-hero-image {
+    @apply absolute inset-0 w-full h-full object-center;
+  }
+
+  .case-hero-image--contain {
+    @apply object-contain p-4;
+  }
+
+  .case-hero-image--cover {
+    @apply object-cover;
+  }
+
+  .case-corner-tl {
+    @apply absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-container z-20;
+  }
+
+  .case-corner-tr {
+    @apply absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-container z-20;
+  }
+
+  .case-corner-bl {
+    @apply absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-container z-20;
+  }
+
+  .case-corner-br {
+    @apply absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-container z-20;
+  }
+
+  .protocol-item {
+    @apply text-on-surface hover:text-primary-container transition-colors duration-0 cursor-crosshair;
+  }
+
+  .circuit-card {
+    @apply p-6 flex flex-col border-b border-tech bg-surface min-h-[200px];
+  }
+
+  .section-divider {
+    @apply flex items-center gap-4;
+  }
+
+  .section-divider-line {
+    @apply flex-grow h-px bg-grid-line;
+  }
+}

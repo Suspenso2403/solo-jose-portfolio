@@ -1,0 +1,41 @@
+---
+import { careerEntries } from '@/data/about';
+---
+
+<section class="p-margin md:p-12 border-b border-outline-variant relative overflow-hidden">
+  <div class="flex items-center gap-4 mb-12">
+    <h2 class="font-headline-lg text-headline-lg uppercase text-on-background">Career Circuit</h2>
+    <div class="flex-grow h-px bg-outline-variant"></div>
+    <span class="font-label-mono text-label-mono text-primary-container">V.2026_STABLE</span>
+  </div>
+
+  <div class="space-y-grid_stroke bg-outline-variant border border-outline-variant">
+    {
+      careerEntries.map((entry, index) => (
+        <div class="career-row group">
+          <div class="font-label-mono">
+            <div
+              class:list={[
+                'text-[10px] mb-2 uppercase',
+                index === 0 ? 'text-primary-container' : 'text-outline-variant',
+              ]}
+            >
+              {entry.nodeLabel}
+            </div>
+            <div class="text-on-surface text-lg">{entry.period}</div>
+          </div>
+          <div class="md:col-span-2">
+            <h3 class="font-headline-md text-headline-md text-on-background mb-2">{entry.role}</h3>
+            <p class="font-label-mono text-label-mono text-primary-container mb-4">{entry.company}</p>
+            <p class="text-on-surface-variant">{entry.description}</p>
+          </div>
+          <div class="flex md:justify-end items-start pt-4">
+            <span class="material-symbols-outlined text-outline-variant group-hover:text-primary-container transition-colors duration-0">
+              arrow_outward
+            </span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

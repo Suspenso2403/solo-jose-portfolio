@@ -1,0 +1,47 @@
+---
+import { withBase } from '@/utils/path';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<aside class:list={['min-w-0', className]} aria-label="Introduction video">
+  <p class="font-label-mono text-label-mono text-on-surface-variant mb-2">INTRO_CLIP</p>
+  <div
+    class="relative overflow-hidden border border-grid-line bg-surface-container-low aspect-video w-full"
+  >
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      class="hero-video w-full h-full object-contain object-center grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition-all duration-0"
+      aria-label="Short studio introduction clip"
+    >
+      <source src={withBase('/assets/hero.mp4')} type="video/mp4" />
+    </video>
+    <div
+      class="hero-video-fallback absolute inset-0 hidden items-center justify-center p-4 bg-surface-container-low text-center"
+      aria-hidden="true"
+    >
+      <p class="font-label-mono text-label-mono text-on-surface-variant">
+        Motion reduced — video hidden
+      </p>
+    </div>
+  </div>
+</aside>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+
+    .hero-video-fallback {
+      display: flex;
+    }
+  }
+</style>

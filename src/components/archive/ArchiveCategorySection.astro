@@ -1,0 +1,52 @@
+---
+import DirectoryBar from '@/components/ui/DirectoryBar.astro';
+import GridCell from '@/components/ui/GridCell.astro';
+import type { ArchiveCategory } from '@/types';
+
+interface Props {
+  category: ArchiveCategory;
+}
+
+const { category } = Astro.props;
+---
+
+<section class="max-w-full border-b border-grid-border">
+  <DirectoryBar
+    path={category.path}
+    meta={`SLOTS: ${String(category.slotsAvailable).padStart(2, '0')}_AVAILABLE`}
+  />
+  <div class:list={['grid w-full', category.gridClass]}>
+    {
+      category.slots.map((slot) => {
+        if (slot.type === 'item') {
+          return (
+            <GridCell
+              href={`/archive/${slot.item.slug}`}
+              image={slot.item.image}
+              imageAlt={slot.item.imageAlt}
+              label={slot.item.label}
+              aspect={slot.item.aspect ?? category.aspect}
+              imageFit={category.id === 'brand-marks' || category.id === 'typography' ? 'contain' : 'cover'}
+            />
+          );
+        }
+        if (slot.type === 'no-asset') {
+          return (
+            <div class="grid-cell aspect-square flex items-center justify-center bg-surface">
+              <div class="text-accent-orange font-label-mono text-[12px] border border-accent-orange p-4 opacity-50">
+                NO_ASSET_FOUND
+              </div>
+            </div>
+          );
+        }
+        return (
+          <GridCell
+            empty
+            emptyText={slot.emptyText}
+            aspect={category.aspect}
+          />
+        );
+      })
+    }
+  </div>
+</section>

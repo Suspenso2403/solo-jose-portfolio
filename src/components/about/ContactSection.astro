@@ -1,0 +1,72 @@
+---
+import { contactCopy } from '@/data/about';
+import { contactEmail } from '@/data/site';
+---
+
+<section class="grid grid-cols-1 md:grid-cols-2 border-b border-outline-variant">
+  <div class="p-margin md:p-12 border-r border-outline-variant flex flex-col justify-between">
+    <div>
+      <h2 class="font-display-lg text-headline-lg uppercase mb-gutter">
+        Initiate <br /> Transmission
+      </h2>
+      <p class="font-body-lg text-body-lg text-on-surface-variant max-w-sm">
+        {contactCopy.description}
+      </p>
+    </div>
+    <div class="mt-12 space-y-2">
+      <div class="flex items-center gap-4 font-label-mono text-label-mono">
+        <span class="text-primary-container">COORD_LAT:</span> {contactCopy.lat}
+      </div>
+      <div class="flex items-center gap-4 font-label-mono text-label-mono">
+        <span class="text-primary-container">COORD_LNG:</span> {contactCopy.lng}
+      </div>
+    </div>
+  </div>
+
+  <div class="p-margin md:p-12 bg-surface-container">
+    <form
+      class="space-y-gutter"
+      action={`mailto:${contactEmail}`}
+      method="POST"
+      enctype="text/plain"
+    >
+      <div>
+        <label class="font-label-mono text-label-mono text-primary-container mb-2 block uppercase">
+          Sender_Identity
+        </label>
+        <input
+          class="contact-input"
+          name="name"
+          placeholder="NAME / ORGANIZATION"
+          type="text"
+          required
+        />
+      </div>
+      <div>
+        <label class="font-label-mono text-label-mono text-primary-container mb-2 block uppercase">
+          Communication_Relay
+        </label>
+        <input
+          class="contact-input"
+          name="email"
+          placeholder="EMAIL_ADDRESS"
+          type="email"
+          required
+        />
+      </div>
+      <div>
+        <label class="font-label-mono text-label-mono text-primary-container mb-2 block uppercase">
+          Message_Payload
+        </label>
+        <textarea
+          class="contact-input"
+          name="message"
+          placeholder="ENTER_MESSAGE..."
+          rows="4"
+          required
+        ></textarea>
+      </div>
+      <button class="transmit-button" type="submit">[TRANSMIT_MESSAGE]</button>
+    </form>
+  </div>
+</section>

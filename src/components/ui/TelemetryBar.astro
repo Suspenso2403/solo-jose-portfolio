@@ -1,0 +1,19 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  percent?: number;
+}
+
+const { label, value, percent = 100 } = Astro.props;
+---
+
+<div>
+  <div class="flex justify-between font-label-mono text-[10px] mb-1 text-on-surface uppercase">
+    <span>{label}</span>
+    <span>{value}</span>
+  </div>
+  <div class="telemetry-bar">
+    <div class="telemetry-fill" style={`width: ${percent}%`}></div>
+  </div>
+</div>

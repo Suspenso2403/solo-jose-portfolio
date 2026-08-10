@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "ey-gds",
+    "title": "EY GDS Mexico",
+    "layout": "enterprise"
+  },
+  {
+    "slug": "stori-card",
+    "title": "Stori Card",
+    "layout": "fintech"
+  },
+  {
+    "slug": "multiplica-talent",
+    "title": "Multiplica Talent",
+    "layout": "corporate"
+  }
+]

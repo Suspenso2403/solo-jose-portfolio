@@ -1,0 +1,13 @@
+---
+interface Props {
+  path: string;
+  meta?: string;
+}
+
+const { path, meta } = Astro.props;
+---
+
+<div class="directory-bar">
+  <div class="directory-bar-path">[Directory: {path}]</div>
+  {meta && <div class="directory-bar-meta">{meta}</div>}
+</div>
