@@ -2,7 +2,7 @@
 import { siteConfig, navItems, contactEmail } from '@/data/site';
 import NavLink from '@/components/ui/NavLink.astro';
 import WorkSecondaryNav from '@/components/WorkSecondaryNav.astro';
-import { stripBase, withBase } from '@/utils/path';
+import { stripBase } from '@/utils/path';
 
 interface Props {
   currentPath?: string;
@@ -35,7 +35,7 @@ const workActive = isWorkSectionActive();
   <div class="flex justify-between items-center px-margin py-unit h-16">
     <div class="flex items-center gap-gutter min-w-0">
       <a
-        href={withBase('/')}
+        href={siteConfig.url}
         class="font-headline-md text-headline-md text-primary-container tracking-tighter uppercase font-bold no-underline shrink-0"
       >
         {siteConfig.name}

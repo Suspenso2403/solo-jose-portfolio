@@ -1,5 +1,5 @@
 ---
-import { withBase } from '@/utils/path';
+import { siteConfig } from '@/data/site';
 
 interface Props {
   note?: string;
@@ -10,7 +10,7 @@ const { note } = Astro.props;
 
 <div class="px-margin py-4 border-t border-grid-line bg-background flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
   <a
-    href={withBase('/')}
+    href={siteConfig.url}
     class="font-label-mono text-label-mono text-primary-container hover:underline no-underline"
   >
     ← BACK_TO_HOME
