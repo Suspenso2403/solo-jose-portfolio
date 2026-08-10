@@ -1,5 +1,6 @@
 ---
 import Panel from '@/components/ui/Panel.astro';
+import { withBase } from '@/utils/path';
 ---
 
 <section class="py-16 px-margin bg-background border-b border-grid-border">
@@ -37,13 +38,13 @@ import Panel from '@/components/ui/Panel.astro';
         </p>
         <div class="flex flex-wrap gap-4">
           <a
-            href="/design-system"
+            href={withBase('/design-system')}
             class="border border-accent-orange text-accent-orange px-6 py-2 font-label-mono hover:bg-accent-orange hover:text-background transition-colors duration-0 no-underline"
           >
             PULL_SYSTEM_LOGS
           </a>
           <a
-            href="/archive"
+            href={withBase('/archive')}
             class="border border-grid-border text-on-surface-variant px-6 py-2 font-label-mono hover:border-on-surface transition-colors duration-0 no-underline"
           >
             SYNC_DATA

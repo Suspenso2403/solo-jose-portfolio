@@ -9,6 +9,7 @@ const REPO_BASE = '/solo-jose-portfolio';
 export default defineConfig({
   site: GITHUB_PAGES_SITE,
   base: REPO_BASE,
+  trailingSlash: 'always',
   integrations: [tailwind({ applyBaseStyles: false })],
   vite: {
     resolve: {

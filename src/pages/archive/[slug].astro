@@ -16,7 +16,7 @@ const { slug } = Astro.params;
 const item = getArchiveItem(slug!);
 
 if (!item) {
-  return Astro.redirect('/archive');
+  return Astro.redirect(withBase('/archive'));
 }
 
 const { prev, next } = getAdjacentItems(slug!);
