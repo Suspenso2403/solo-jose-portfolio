@@ -1,5 +1,3 @@
-const TRAILING_SLASH_EXCEPTIONS = new Set(['/download/cv']);
-
 export function isExternalPath(path: string): boolean {
   return (
     !path ||
@@ -16,8 +14,6 @@ function normalizeBase(): string {
 
 function shouldHaveTrailingSlash(path: string): boolean {
   const clean = path.split('?')[0]?.split('#')[0] ?? path;
-  if (TRAILING_SLASH_EXCEPTIONS.has(clean)) return false;
-
   const lastSegment = clean.split('/').filter(Boolean).pop() ?? '';
   return Boolean(lastSegment) && !lastSegment.includes('.');
 }

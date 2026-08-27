@@ -22,7 +22,8 @@ import { withBase } from '@/utils/path';
     <div class="mb-12">
       <ActionButton
         type="link"
-        href={profile.cv.downloadPath}
+        href={profile.cv.path}
+        download={profile.cv.downloadName}
         variant="solid"
         class="inline-flex items-center gap-2 no-underline"
       >

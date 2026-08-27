@@ -13,11 +13,9 @@ export const profile = {
     { code: 'FR', level: 'A1' },
   ],
   cv: {
-    /** Static asset in `public/assets/` */
+    /** Static asset in `public/assets/` — served as-is on GitHub Pages */
     path: '/assets/cv-solo-jose.pdf',
-    /** Download route with Content-Disposition headers */
-    downloadPath: '/download/cv',
-    downloadName: 'CV - Solo José.pdf',
+    downloadName: 'CV - Solo José 2026.pdf',
     label: 'DOWNLOAD CV',
   },
 } as const;
